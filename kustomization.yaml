@@ -1,6 +1,6 @@
 images:
 - name: homeassistant/home-assistant
-  newTag: 2022.11.0b2 
+  newTag: 2022.11.4
 
 namespace: vault 
 
