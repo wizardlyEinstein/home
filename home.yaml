@@ -55,6 +55,6 @@ spec:
       volumes:
         - name: config 
           hostPath:
-           path: /storage/k3s/home
-           type: DirectoryOrCreate
+           path: /ssd/k3s/home
+           type: Directory
 
