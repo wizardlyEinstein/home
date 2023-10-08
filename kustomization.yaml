@@ -7,4 +7,9 @@ namespace: home
 resources:
 - home.yaml 
 - ingress.yaml
+- backup.yaml
+
+generators:
+- gcpServiceUser.yaml
+
 
