@@ -13,8 +13,21 @@ spec:
     - secretName: home-bender-sway-org-tls
       hosts:
         - home.bender.sway.org 
+    - secretName: home-sindt-org-tls
+      hosts:
+        - home.sindt.org 
   rules:
   - host: home.bender.sway.org
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: home 
+            port:
+              number: 8123
+  - host: home.sindt.org
     http:
       paths:
       - path: /
