@@ -1,6 +1,6 @@
 images:
 - name: homeassistant/home-assistant
-  newTag: 2025.2.4
+  newTag: 2025.3.0
 
 namespace: home 
 
