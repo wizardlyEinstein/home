@@ -35,9 +35,6 @@ spec:
         app.kubernetes.io/name: home 
     spec:
       hostNetwork: true
-      securityContext:
-        runAsUser: 1000
-        runAsGroup: 1000
       containers:
         - name: home 
           image: homeassistant/home-assistant 
