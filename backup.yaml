@@ -9,9 +9,6 @@ spec:
       backoffLimit: 0
       template:
         spec:
-          securityContext:
-            runAsUser: 1000
-            runAsGroup: 1000
           initContainers:
             - name: tar 
               image: alpine 
@@ -23,6 +20,9 @@ spec:
               command: ["/bin/sh", "-c"]
               args:
                 - tar -zcvf /backup/home.tar /data 
+              securityContext:
+                runAsUser: 0
+                runAsGroup: 1000
             - name: encrypt 
               image: mozilla/sops:v3.7.3-alpine 
               volumeMounts:
@@ -30,7 +30,11 @@ spec:
                   mountPath: /backup
               command: ["/bin/sh", "-c"]
               args: 
-                - sops --verbose --encrypt --age age1yzj8tdyqfz0c484jdfzs82g862d6e935txu2wz4w58ycsvcwqvxq2crzld /backup/home.tar > /backup/home.tar.enc
+                - sops --verbose --encrypt --age age1yzj8tdyqfz0c484jdfzs82g862d6e935txu2wz4w58ycsvcwqvxq2crzld /backup/home.tar > /backup/home.tar.enc;
+                  rm /backup/home.tar
+              securityContext:
+                runAsUser: 0
+                runAsGroup: 1000
           containers:
             - name: push 
               image: google/cloud-sdk:405.0.0-alpine 
@@ -47,6 +51,9 @@ spec:
               env:
                 - name: GOOGLE_APPLICATION_CREDENTIALS
                   value: /.secrets/gcp/gcpServiceUser.json
+              securityContext:
+                runAsUser: 1000
+                runAsGroup: 1000
           restartPolicy: Never
           volumes:
             - name: backup 
