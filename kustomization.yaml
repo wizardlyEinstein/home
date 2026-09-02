@@ -4,7 +4,7 @@ images:
 - name: ghcr.io/jauderho/age
   newTag: v1.3.2
 - name: google/cloud-sdk
-  newTag: 405.0.0-alpine
+  newTag: 583.0.0-alpine
 - name: alpine
   newTag: 3.24.1
 
