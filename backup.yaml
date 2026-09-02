@@ -24,14 +24,11 @@ spec:
                 runAsUser: 0
                 runAsGroup: 1000
             - name: encrypt 
-              image: mozilla/sops:v3.7.3-alpine 
+              image: ghcr.io/jauderho/age:v1.3.2 
               volumeMounts:
                 - name: backup 
                   mountPath: /backup
-              command: ["/bin/sh", "-c"]
-              args: 
-                - sops --verbose --encrypt --age age1yzj8tdyqfz0c484jdfzs82g862d6e935txu2wz4w58ycsvcwqvxq2crzld /backup/home.tar > /backup/home.tar.enc;
-                  rm /backup/home.tar
+              command: ["/usr/local/bin/age", "-o", "/backup/home.tar.enc", "-r", "age1yzj8tdyqfz0c484jdfzs82g862d6e935txu2wz4w58ycsvcwqvxq2crzld", "/backup/home.tar"]
               securityContext:
                 runAsUser: 0
                 runAsGroup: 1000
@@ -46,8 +43,10 @@ spec:
                   subPath: gcpServiceUser.json
               command: ["/bin/sh", "-c"]
               args:
-                - gcloud auth activate-service-account --key-file=${GOOGLE_APPLICATION_CREDENTIALS};
+                - rm -v /backup/home.tar;
+                  gcloud auth activate-service-account --key-file=${GOOGLE_APPLICATION_CREDENTIALS};
                   gsutil -h Content-Type:application/octet-stream cp -v /backup/home.tar.enc gs://32424361-154a-4ebd-843d-6763887ccfc4/home.tar.enc;
+                  rm -v /backup/home.tar.enc;
               env:
                 - name: GOOGLE_APPLICATION_CREDENTIALS
                   value: /.secrets/gcp/gcpServiceUser.json
