@@ -1,6 +1,6 @@
 images:
 - name: homeassistant/home-assistant
-  newTag: 2026.9.0
+  newTag: 2026.9.2
 - name: ghcr.io/jauderho/age
   newTag: v1.3.2
 - name: google/cloud-sdk
